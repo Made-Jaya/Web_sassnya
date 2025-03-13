@@ -28,6 +28,10 @@ If you find this project helpful, please consider giving it a star ⭐️.
 - [Deployment](#deployment)
   - [Deploy with Vercel](#deploy-with-vercel)
   - [Deploy with Cloudflare Pages](#deploy-with-cloudflare-pages)
+- [Docker Deployment](#docker-deployment)
+  - [Prerequisites](#prerequisites-1)
+  - [Running with Docker](#running-with-docker)
+  - [Docker Commands Reference](#docker-commands-reference)
 - [Tech Stack](#tech-stack)
 - [License](#license)
 
@@ -105,6 +109,61 @@ npm run preview
    - Build output directory: `dist`
    - Node.js version: 20.x
 6. Click "Save and Deploy"
+
+## Docker Deployment
+
+### Prerequisites
+- Docker installed on your system
+- Port 80 available on your host machine
+
+### Running with Docker
+
+1. Build the Docker image (this may take a few minutes as it builds the Astro application):
+```bash
+docker build -t apple-portfolio .
+```
+
+2. Run the container:
+```bash
+# Run in detached mode
+docker run -d -p 80:80 apple-portfolio
+
+# Or run in interactive mode to see the logs
+docker run -it -p 80:80 apple-portfolio
+```
+
+The application will be available at `http://localhost`
+
+### Docker Commands Reference
+- View running containers:
+```bash
+docker ps
+```
+
+- Stop the container:
+```bash
+docker stop $(docker ps -q --filter ancestor=apple-portfolio)
+```
+
+- Remove the container:
+```bash
+docker rm $(docker ps -aq --filter ancestor=apple-portfolio)
+```
+
+- View container logs:
+```bash
+docker logs $(docker ps -q --filter ancestor=apple-portfolio)
+```
+
+- Rebuild and run (useful during development):
+```bash
+docker build -t apple-portfolio . && docker run -d -p 80:80 apple-portfolio
+```
+
+- Use a different port (e.g., 8080):
+```bash
+docker run -d -p 8080:80 apple-portfolio
+```
 
 ## Tech Stack
 
